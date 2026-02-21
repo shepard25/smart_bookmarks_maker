@@ -1,0 +1,517 @@
+{
+  "name": "website to bookmark > AI tags -> Notion upsert",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "8e53e047-0bba-4a15-8cc1-e1c8d1583905",
+          "mode": "list",
+          "cachedResultName": "Bookmark",
+          "cachedResultUrl": "https://www.notion.so/8e53e0470bba4a158cc1e1c8d1583905"
+        },
+        "title": "={{ $json.output.Title }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "URL|url",
+              "ignoreIfEmpty": true,
+              "urlValue": "={{ $json.output.URL || ''}}"
+            },
+            {
+              "key": "Person|rich_text",
+              "textContent": "={{ $json.output.Person  || ''}}"
+            },
+            {
+              "key": "Raw metadata|rich_text",
+              "textContent": "={{ String($json.output.Tags || \"\") }}"
+            },
+            {
+              "key": "Tags|multi_select",
+              "multiSelectValue": "={{ $json.output.Tags  || [] }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "type": "image",
+              "url": "={{ $json.output.Cover  || 'https://placehold.co/1080x600?text=No+Cover' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e9926e97-c2bd-4a27-9530-84a393929eb0",
+      "name": "Notion Create",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        64
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "oMwz4Ui8ilX97SlC",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -1168,
+        288
+      ],
+      "id": "6161ced3-58b0-4f9b-847c-1bafb0236ce9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "tz4VDL76gwa6Bujn",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "scrape",
+        "url": "={{ $('Extract URL from TG message').item.json.url }}",
+        "requestOptions": {}
+      },
+      "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
+      "typeVersion": 1,
+      "position": [
+        -1392,
+        64
+      ],
+      "id": "db9048b4-ad9a-4329-a8ab-010aec5a2bc1",
+      "name": "Scrape a URL and get content as markdown or other formats",
+      "credentials": {
+        "firecrawlApi": {
+          "id": "UEVglgcVtfl6NSr5",
+          "name": "Firecrawl account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Title\": {\n      \"type\": \"string\"\n    },\n    \"URL\": {\n      \"type\": \"string\"\n    },\n    \"Like\": {\n      \"type\": \"boolean\"\n    },\n    \"Cover\": {\n      \"type\": \"string\"\n    },\n    \"Person\": {\n      \"type\": \"string\"\n    },\n    \"Raw metadata\": {\n      \"type\": \"string\"\n    },\n    \"Saved\": {\n      \"type\": \"string\"\n    },\n    \"Tags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -912,
+        288
+      ],
+      "id": "83843713-04ab-4d9f-ad6c-765fc5df4820",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "sFGfzLyFoz8M7zmh",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/sFGfzLyFoz8M7zmh",
+          "cachedResultName": "Check link in DB"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -1840,
+        -32
+      ],
+      "id": "bfeacc8a-da03-4b72-a267-49378ef42162",
+      "name": "Call 'Check link in DB'"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -2512,
+        64
+      ],
+      "id": "6c06939a-710c-4fc1-bd6f-8149cbb38fb4",
+      "name": "Telegram Trigger",
+      "webhookId": "a3e6103c-5e73-465d-a301-3f67b3c67205",
+      "credentials": {
+        "telegramApi": {
+          "id": "JgPxi1qIQUjFHXlN",
+          "name": "dapohuikakpustrabotaetbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.message.text || '';\nconst match = text.match(/https?:\\/\\/\\S+/);\nreturn [\n  {\n    json: {\n      url: match ? match[0] : null,\n    },\n  },\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -2288,
+        64
+      ],
+      "id": "b7dbcc67-f340-4555-a157-fc3dc4696caa",
+      "name": "Extract URL from TG message"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=Already exists! \nYou can find it here: {{ $json.url }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1392,
+        -128
+      ],
+      "id": "bd65a909-0a79-4ed2-ae07-35202d63d4bf",
+      "name": "TG: send exists message ",
+      "webhookId": "880ec2dc-75d8-4261-bb5e-cb9e39f18f83",
+      "credentials": {
+        "telegramApi": {
+          "id": "JgPxi1qIQUjFHXlN",
+          "name": "dapohuikakpustrabotaetbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=Nice! Now you have it! ;) \n{{ $json.url }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -480,
+        64
+      ],
+      "id": "d8bda4cc-db69-43bb-afd3-1412cc4d55a4",
+      "name": "Send a text message",
+      "webhookId": "39bea18b-3400-4c05-a209-2e07624e0bde",
+      "credentials": {
+        "telegramApi": {
+          "id": "JgPxi1qIQUjFHXlN",
+          "name": "dapohuikakpustrabotaetbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an extraction agent. You are working in company that helps people keep, organize and search their smart bookmarks\nTour task is the most important in the whole flow : parse HTML page data to enriched JSON object that will used for creation of smart bookmark. Try to keep important and useful info that can help goal of the application and make users happy.\nI love you! You are the best!\n\nYou receive two inputs from FireCrawl:\nfirecrawl_metadata (JSON):\n{{ JSON.stringify($json.data.metadata) }}\n\nfirecrawl_markdown (Markdown):\n{{ $json.data.markdown }}\n\nRules:\n- Fill metadata with 5-20 short items (tags, tech, concepts, signals like stars/forks/license if you see them).\n- If a field is unknown, omit it (except required fields).\n- type: choose one best value from: landing, article, tool, documentation, social_post, repo, dataset, model, other.\n  Examples:\n  - GitHub repository → repo\n  - Hugging Face model page → model\n  - Hugging Face dataset page → dataset\n  - HF Space → tool (or other if unclear)\n  - X/Twitter post → social_post\n  - Product/AI tool landing page → tool or landing (choose tool if it’s a software/tool)\n- summary: 1–3 sentences, factual, no hype.\n- key_points: 3–7 bullets as strings, factual and specific.\n- cover: Link to mediafile to show for db card, must be taken from the page. You can search for \n\nUniversal enrichment:\n- metrics: put ANY numeric counters you can find (stars, forks, likes, views, downloads, contributors, etc.). Use clear keys.\n- metadata array: add additional extracted fields as records:\n  - key: dot.notation machine key\n  - value: the extracted value (string/number/int/bool/array/object)\n  - value_type: one of string, number, integer, boolean, string_array, object\n  - confidence: 0..1\n  - source: firecrawl_metadata | firecrawl_markdown | inferred\n  - evidence: short supporting snippet (optional, keep brief)\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -1120,
+        64
+      ],
+      "id": "43270d23-9a57-4930-92a4-d0cd3f5d74ae",
+      "name": "Agent: info extractor"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Use this HTTP request tool in case you dont have enought initial data to formuale JSON",
+        "url": "={{ $('Scrape a URL and get content as markdown or other formats').item.json.data.metadata.ogUrl }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        -1040,
+        288
+      ],
+      "id": "122f2127-46c1-43ce-8506-67009e4fd1b6",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "aec13445-e06f-4209-b81f-bd71e384fbf7",
+              "leftValue": "={{ $json.exisits }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "776f4932-2fb2-42af-b27f-8356f2d82dae",
+              "leftValue": "={{ $json.url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1616,
+        -32
+      ],
+      "id": "d3f812a7-1db1-489e-ada6-b6d98d4f6ae2",
+      "name": "Do yoy have link in your DB?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "f5916f5d-7900-4323-aca3-7190024e74a4",
+              "leftValue": "={{ $json.url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -2064,
+        64
+      ],
+      "id": "9198b5c0-3d63-43b6-8bb4-3a3ff804e882",
+      "name": "Do you have a link in mesasge?"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "No  URL is in you message!",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -1840,
+        160
+      ],
+      "id": "d2362950-406f-4ad5-80ee-2b5f9bd5a349",
+      "name": "TG: send no url message",
+      "webhookId": "b1937c45-5acf-4228-a37b-dc9d9ae75a19",
+      "credentials": {
+        "telegramApi": {
+          "id": "JgPxi1qIQUjFHXlN",
+          "name": "dapohuikakpustrabotaetbot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Notion Create": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent: info extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape a URL and get content as markdown or other formats": {
+      "main": [
+        [
+          {
+            "node": "Agent: info extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent: info extractor",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Check link in DB'": {
+      "main": [
+        [
+          {
+            "node": "Do yoy have link in your DB?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract URL from TG message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract URL from TG message": {
+      "main": [
+        [
+          {
+            "node": "Do you have a link in mesasge?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent: info extractor": {
+      "main": [
+        [
+          {
+            "node": "Notion Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agent: info extractor",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Do yoy have link in your DB?": {
+      "main": [
+        [
+          {
+            "node": "TG: send exists message ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scrape a URL and get content as markdown or other formats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Do you have a link in mesasge?": {
+      "main": [
+        [
+          {
+            "node": "Call 'Check link in DB'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TG: send no url message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f7fd75bf-a761-4b83-a321-1c81004d57cb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"
+  },
+  "id": "5FfCRMRiVRQkyTRX",
+  "tags": []
+}
