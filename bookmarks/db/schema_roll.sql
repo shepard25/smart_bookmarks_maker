@@ -5,7 +5,7 @@ EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 -- 1. Таблица пользователей
-CREATE TABLE IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS bkmrk_users
 (
     id
     SERIAL
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users
     );
 
 -- 2. Таблица авторизации (связываем TG ID с системным ID)
-CREATE TABLE IF NOT EXISTS user_auth
+CREATE TABLE IF NOT EXISTS bkmrk_user_auth
 (
     id
     SERIAL
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS user_auth
     user_id
     INTEGER
     REFERENCES
-    users
+    bkmrk_users
 (
     id
 ) ON DELETE CASCADE,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS bookmarks
     user_id
     INTEGER
     REFERENCES
-    users
+    bkmrk_users
 (
     id
 ) ON DELETE CASCADE,
@@ -89,5 +89,5 @@ SELECT ua.auth_id              as tg_user_id,
        u.notion_token_encrypted,
        u.subscription_status,
        (u.valid_until > now()) as has_access -- Простая проверка: оплачено или нет
-FROM user_auth ua
-         JOIN users u ON ua.user_id = u.id;
+FROM bkmrk_user_auth ua
+         JOIN bkmrk_users u ON ua.user_id = u.id;

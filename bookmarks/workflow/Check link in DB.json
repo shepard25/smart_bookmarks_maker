@@ -1,0 +1,148 @@
+{
+  "name": "Check link in DB",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "bookmarks",
+          "mode": "list",
+          "cachedResultName": "bookmarks"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "url",
+              "value": "={{ $json.url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        336,
+        80
+      ],
+      "id": "4efa67e2-6f4d-421b-92a4-57162e4470f8",
+      "name": "Select rows from a table",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c33145d6-82ca-4f33-b657-73959c9edd22",
+              "name": "url_is_present",
+              "value": "={{ !$json.isEmpty() }}",
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        544,
+        80
+      ],
+      "id": "e4ee7ef1-e174-498d-9166-f619f753d79f",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "url"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -16,
+        0
+      ],
+      "id": "f9ca8c77-1d2c-483d-a2f8-69001430828b",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        176
+      ],
+      "id": "1b36c085-4528-4719-a5f3-bb92a0d5e364",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Select rows from a table": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Select rows from a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a7afcf7b-6f92-46ad-8be5-a9ef7e4acbc6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"
+  },
+  "id": "VBdkWJwmLz12cKdy",
+  "tags": []
+}
