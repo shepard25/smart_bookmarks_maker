@@ -54,7 +54,5 @@ services:
       DB_POSTGRESDB_PASSWORD: n8n
       # ключ шифрования
       N8N_ENCRYPTION_KEY: localdevkey123
-      # tunell
-      WEBHOOK_URL: https://uncleavable-phung-nonfeeling.ngrok-free.dev
     volumes:
       - ./n8n_data:/home/node/.n8n

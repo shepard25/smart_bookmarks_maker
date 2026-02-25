@@ -43,18 +43,18 @@
         },
         "options": {}
       },
-      "id": "e9926e97-c2bd-4a27-9530-84a393929eb0",
+      "id": "cf8e5a06-8e76-4ce2-b16f-137b6906f2ae",
       "name": "Notion Create",
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        -704,
-        64
+        1088,
+        96
       ],
       "credentials": {
         "notionApi": {
-          "id": "oMwz4Ui8ilX97SlC",
-          "name": "Notion account"
+          "id": "bDm8PT41kde5yZFK",
+          "name": "bookmarks"
         }
       }
     },
@@ -72,14 +72,14 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        -1168,
-        288
+        624,
+        416
       ],
-      "id": "6161ced3-58b0-4f9b-847c-1bafb0236ce9",
+      "id": "623b9f27-ae74-43b2-bca6-ea53509cd15b",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "tz4VDL76gwa6Bujn",
+          "id": "DUTZLzREZGc8fX9y",
           "name": "OpenAi account"
         }
       }
@@ -93,14 +93,14 @@
       "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
       "typeVersion": 1,
       "position": [
-        -1392,
-        64
+        176,
+        288
       ],
-      "id": "db9048b4-ad9a-4329-a8ab-010aec5a2bc1",
+      "id": "7f138e8e-a9cc-4e45-ba64-e96276865638",
       "name": "Scrape a URL and get content as markdown or other formats",
       "credentials": {
         "firecrawlApi": {
-          "id": "UEVglgcVtfl6NSr5",
+          "id": "nYuWT3xYRGVhHBDQ",
           "name": "Firecrawl account"
         }
       }
@@ -108,24 +108,24 @@
     {
       "parameters": {
         "schemaType": "manual",
-        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Title\": {\n      \"type\": \"string\"\n    },\n    \"URL\": {\n      \"type\": \"string\"\n    },\n    \"Like\": {\n      \"type\": \"boolean\"\n    },\n    \"Cover\": {\n      \"type\": \"string\"\n    },\n    \"Person\": {\n      \"type\": \"string\"\n    },\n    \"Raw metadata\": {\n      \"type\": \"string\"\n    },\n    \"Saved\": {\n      \"type\": \"string\"\n    },\n    \"Tags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Title\": {\n      \"type\": \"string\"\n    },\n    \"URL\": {\n      \"type\": \"string\"\n    },\n    \"Like\": {\n      \"type\": \"boolean\"\n    },\n    \"Cover\": {\n      \"type\": \"string\"\n    },\n    \"Person\": {\n      \"type\": \"string\"\n    },\n    \"Raw metadata\": {\n      \"type\": \"string\"\n    },\n    \"Saved\": {\n      \"type\": \"string\"\n    },\n    \"Tags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_format\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_topic\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_function\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_tech_stack\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -912,
-        288
+        880,
+        416
       ],
-      "id": "83843713-04ab-4d9f-ad6c-765fc5df4820",
+      "id": "dd51a87e-f49b-4d76-ba45-49fc6c2452b1",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "sFGfzLyFoz8M7zmh",
+          "value": "VBdkWJwmLz12cKdy",
           "mode": "list",
-          "cachedResultUrl": "/workflow/sFGfzLyFoz8M7zmh",
+          "cachedResultUrl": "/workflow/VBdkWJwmLz12cKdy",
           "cachedResultName": "Check link in DB"
         },
         "workflowInputs": {
@@ -143,10 +143,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -1840,
-        -32
+        -496,
+        96
       ],
-      "id": "bfeacc8a-da03-4b72-a267-49378ef42162",
+      "id": "7ba2af4e-caf3-4767-858a-61dcc08fd47b",
       "name": "Call 'Check link in DB'"
     },
     {
@@ -159,16 +159,16 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -2512,
-        64
+        -1168,
+        96
       ],
-      "id": "6c06939a-710c-4fc1-bd6f-8149cbb38fb4",
+      "id": "b065d512-9e4b-4ec1-951c-5099f5ba2a00",
       "name": "Telegram Trigger",
       "webhookId": "a3e6103c-5e73-465d-a301-3f67b3c67205",
       "credentials": {
         "telegramApi": {
-          "id": "JgPxi1qIQUjFHXlN",
-          "name": "dapohuikakpustrabotaetbot"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -179,10 +179,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -2288,
-        64
+        -944,
+        192
       ],
-      "id": "b7dbcc67-f340-4555-a157-fc3dc4696caa",
+      "id": "16b223a2-2b6a-434f-b9df-799e08619d9a",
       "name": "Extract URL from TG message"
     },
     {
@@ -194,16 +194,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -1392,
-        -128
+        -48,
+        0
       ],
-      "id": "bd65a909-0a79-4ed2-ae07-35202d63d4bf",
+      "id": "ed100138-87c1-4c35-967b-70d7c6671197",
       "name": "TG: send exists message ",
       "webhookId": "880ec2dc-75d8-4261-bb5e-cb9e39f18f83",
       "credentials": {
         "telegramApi": {
-          "id": "JgPxi1qIQUjFHXlN",
-          "name": "dapohuikakpustrabotaetbot"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -216,33 +216,33 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -480,
-        64
+        1312,
+        192
       ],
-      "id": "d8bda4cc-db69-43bb-afd3-1412cc4d55a4",
+      "id": "07cfa6d0-e74f-4bed-a8d0-47dd4bb68367",
       "name": "Send a text message",
       "webhookId": "39bea18b-3400-4c05-a209-2e07624e0bde",
       "credentials": {
         "telegramApi": {
-          "id": "JgPxi1qIQUjFHXlN",
-          "name": "dapohuikakpustrabotaetbot"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=You are an extraction agent. You are working in company that helps people keep, organize and search their smart bookmarks\nTour task is the most important in the whole flow : parse HTML page data to enriched JSON object that will used for creation of smart bookmark. Try to keep important and useful info that can help goal of the application and make users happy.\nI love you! You are the best!\n\nYou receive two inputs from FireCrawl:\nfirecrawl_metadata (JSON):\n{{ JSON.stringify($json.data.metadata) }}\n\nfirecrawl_markdown (Markdown):\n{{ $json.data.markdown }}\n\nRules:\n- Fill metadata with 5-20 short items (tags, tech, concepts, signals like stars/forks/license if you see them).\n- If a field is unknown, omit it (except required fields).\n- type: choose one best value from: landing, article, tool, documentation, social_post, repo, dataset, model, other.\n  Examples:\n  - GitHub repository → repo\n  - Hugging Face model page → model\n  - Hugging Face dataset page → dataset\n  - HF Space → tool (or other if unclear)\n  - X/Twitter post → social_post\n  - Product/AI tool landing page → tool or landing (choose tool if it’s a software/tool)\n- summary: 1–3 sentences, factual, no hype.\n- key_points: 3–7 bullets as strings, factual and specific.\n- cover: Link to mediafile to show for db card, must be taken from the page. You can search for \n\nUniversal enrichment:\n- metrics: put ANY numeric counters you can find (stars, forks, likes, views, downloads, contributors, etc.). Use clear keys.\n- metadata array: add additional extracted fields as records:\n  - key: dot.notation machine key\n  - value: the extracted value (string/number/int/bool/array/object)\n  - value_type: one of string, number, integer, boolean, string_array, object\n  - confidence: 0..1\n  - source: firecrawl_metadata | firecrawl_markdown | inferred\n  - evidence: short supporting snippet (optional, keep brief)\n",
+        "text": "=**ROLE**\nYou are a Senior Data Ontologist & Bookmark Librarian. Extract high-signal metadata from any web resource to populate a Notion Smart Bookmark.\n\n**INPUTS**\n- FIRECRAWL_METADATA: {{ $json.data.metadata }}\n- FIRECRAWL_MARKDOWN: {{ $json.data.markdown }}\n- EXISTING_FACETS_LIBRARY (NOT CONTENT):\n  - Formats: {{ $json.facets.format }}\n  - Topics: {{ $json.facets.topic }}\n  - Functions: {{ $json.facets.function }}\n  - Tech Stack: {{ $json.facets.tech_stack }}\n\n**OUTPUT (STRICT)**\nReturn ONLY these keys (exact spelling), and always include all of them:\nTitle, URL, Like, Cover, Person, Raw metadata, Saved, Tags, facet_format, facet_topic, facet_function, facet_tech_stack\n\n**DEFAULTS**\n- Unknown string => \"\"\n- Unknown arrays => []\n\n**NO HALLUCINATIONS**\nUse only information explicitly present in FIRECRAWL_METADATA or FIRECRAWL_MARKDOWN. If not present, leave empty.\n\n**URL**\nPrefer canonical/og:url from metadata; else keep the input URL.\n\n**TITLE**\nPrefer metadata title/og:title; else first H1 in markdown; else domain. Remove obvious boilerplate suffixes.\n\n**PERSON (SOURCE/PUBLISHER)**\nChoose the primary publisher/source identity (not the speaker).\n- YouTube/video: channel/creator name if explicitly present (e.g., “Channel”, “Uploader”, “Author”, “site_name”). If unclear, use site/domain.\n- GitHub: owner/org if explicitly present; else site/domain.\n- Articles/docs: author if explicitly present; else publication/site name.\n\n**COVER (ABSOLUTE URL ONLY)**\nPick the best visual URL:\n1) og:image / twitter:image / explicit thumbnail in metadata\n2) strong hero/main image URL from markdown\n3) if the URL itself is a direct image (jpg/png/webp/gif), use it\nMust be absolute; if only relative exists => \"\".\n\n**RAW METADATA (ONE LINE, FACTUAL)**\nOne compact line using only explicit facts (duration/views/published/stars/language/license/etc). If no reliable facts => \"\".\n\n**FACETS & TAGS (CRITICAL)**\nTreat EXISTING_FACETS_LIBRARY as a lookup dictionary ONLY, never as page content.\nIf the library text appears inside FIRECRAWL_MARKDOWN (e.g., headings like “EXISTING_FACETS_LIBRARY” or lists of facets), IGNORE that section completely for extraction and tagging.\n\n**FACET RULES**\n- Always fill facet_format, facet_topic, facet_function, facet_tech_stack (arrays may be empty).\n- Prefer matching existing facet values from the library (semantic match).\n- New tags are allowed when clearly central AND appear in the title or early description/content (verbatim or near-verbatim). Keep English, 1–3 words.\n\nSuggested limits:\n- facet_format: up to 2\n- facet_topic: up to 3\n- facet_function: up to 4\n- facet_tech_stack: up to 4\n\n**TAGS**\nTags MUST be the unique union of all facet_* arrays (no extra tags outside facets). Deduplicate and keep exact library spelling when reused.",
         "hasOutputParser": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -1120,
-        64
+        688,
+        192
       ],
-      "id": "43270d23-9a57-4930-92a4-d0cd3f5d74ae",
+      "id": "4f02f609-61e2-4d70-8a70-823c5f0c1920",
       "name": "Agent: info extractor"
     },
     {
@@ -254,10 +254,10 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.4,
       "position": [
-        -1040,
-        288
+        752,
+        416
       ],
-      "id": "122f2127-46c1-43ce-8506-67009e4fd1b6",
+      "id": "b17b8ef1-eb8c-4354-8751-970361f0224a",
       "name": "HTTP Request"
     },
     {
@@ -272,37 +272,27 @@
           "conditions": [
             {
               "id": "aec13445-e06f-4209-b81f-bd71e384fbf7",
-              "leftValue": "={{ $json.exisits }}",
+              "leftValue": "={{ $json.url_is_present }}",
               "rightValue": "",
               "operator": {
                 "type": "boolean",
                 "operation": "true",
                 "singleValue": true
               }
-            },
-            {
-              "id": "776f4932-2fb2-42af-b27f-8356f2d82dae",
-              "leftValue": "={{ $json.url }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
             }
           ],
           "combinator": "and"
         },
-        "looseTypeValidation": true,
+        "looseTypeValidation": "={{ true }}",
         "options": {}
       },
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -1616,
-        -32
+        -272,
+        96
       ],
-      "id": "d3f812a7-1db1-489e-ada6-b6d98d4f6ae2",
+      "id": "6aaa5dc3-158d-4857-823f-91ebce231813",
       "name": "Do yoy have link in your DB?"
     },
     {
@@ -334,10 +324,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -2064,
-        64
+        -720,
+        192
       ],
-      "id": "9198b5c0-3d63-43b6-8bb4-3a3ff804e882",
+      "id": "c39a9a0d-bca4-418b-b3f7-0637b7d3627b",
       "name": "Do you have a link in mesasge?"
     },
     {
@@ -349,21 +339,247 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -1840,
-        160
+        -496,
+        288
       ],
-      "id": "d2362950-406f-4ad5-80ee-2b5f9bd5a349",
+      "id": "b1787c9d-030f-4a13-9aa0-83445b25c92e",
       "name": "TG: send no url message",
       "webhookId": "b1937c45-5acf-4228-a37b-dc9d9ae75a19",
       "credentials": {
         "telegramApi": {
-          "id": "JgPxi1qIQUjFHXlN",
-          "name": "dapohuikakpustrabotaetbot"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "bookmarks",
+          "mode": "list",
+          "cachedResultName": "bookmarks"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_id": 777,
+            "facet_format": "={{ $json.output.facet_format }}",
+            "facet_topic": "={{ $json.output.facet_topic }}",
+            "facet_function": "={{ $json.output.facet_function }}",
+            "created_at": "={{ $json.created_at || $now.toISO() }}",
+            "facet_tech_stack": "={{ $json.output.facet_tech_stack }}",
+            "title": "={{ $json.output.Title }}",
+            "url": "={{ $json.output.URL }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "user_id",
+              "displayName": "user_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notion_page_id",
+              "displayName": "notion_page_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facet_format",
+              "displayName": "facet_format",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facet_topic",
+              "displayName": "facet_topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facet_function",
+              "displayName": "facet_function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "facet_tech_stack",
+              "displayName": "facet_tech_stack",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "array",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1088,
+        288
+      ],
+      "id": "b6c4face-d867-412c-b49d-03d3a6a93cde",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1168,
+        288
+      ],
+      "id": "e85f9c05-cbc0-42bd-b6a2-c481c5fa2f02",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT json_build_object(\n  'format',      (SELECT array_agg(DISTINCT f) FROM bookmarks, unnest(facet_format) f),\n  'topic',       (SELECT array_agg(DISTINCT t) FROM bookmarks, unnest(facet_topic) t),\n  'function',    (SELECT array_agg(DISTINCT fn) FROM bookmarks, unnest(facet_function) fn),\n  'tech_stack',  (SELECT array_agg(DISTINCT ts) FROM bookmarks, unnest(facet_tech_stack) ts)\n) AS facets;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        176,
+        96
+      ],
+      "id": "c6d127da-3d21-4a1a-81c3-094e1293ed95",
+      "name": "Select distince facets",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        192
+      ],
+      "id": "4b49cd3b-7780-44c1-be0e-7b283dd6e5f1",
+      "name": "URL was not processed yet"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        464,
+        192
+      ],
+      "id": "b36a922a-1fb5-41d9-8ad2-bd79f89971f6",
+      "name": "Merge"
     }
   ],
-  "pinData": {},
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "update_id": 100000001,
+          "message": {
+            "message_id": 12,
+            "date": 1700000000,
+            "chat": {
+              "id": 123456789,
+              "type": "private",
+              "username": "test_user",
+              "first_name": "Test"
+            },
+            "from": {
+              "id": 123456789,
+              "is_bot": false,
+              "username": "test_user",
+              "first_name": "Test",
+              "language_code": "ru"
+            },
+            "text": "https://github.com/grikdotnet/ai-stenographer"
+          }
+        }
+      }
+    ]
+  },
   "connections": {
     "Notion Create": {
       "main": [
@@ -391,9 +607,9 @@
       "main": [
         [
           {
-            "node": "Agent: info extractor",
+            "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -449,6 +665,11 @@
             "node": "Notion Create",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -475,7 +696,7 @@
         ],
         [
           {
-            "node": "Scrape a URL and get content as markdown or other formats",
+            "node": "URL was not processed yet",
             "type": "main",
             "index": 0
           }
@@ -499,6 +720,66 @@
           }
         ]
       ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Extract URL from TG message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select distince facets": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "URL was not processed yet": {
+      "main": [
+        [
+          {
+            "node": "Select distince facets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Scrape a URL and get content as markdown or other formats",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Agent: info extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -507,11 +788,11 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "f7fd75bf-a761-4b83-a321-1c81004d57cb",
+  "versionId": "2001dacf-55da-473a-b69d-b249fcb72b90",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"
   },
-  "id": "5FfCRMRiVRQkyTRX",
+  "id": "PYZQhO0hREVBWMnL",
   "tags": []
 }
