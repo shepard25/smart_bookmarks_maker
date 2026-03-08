@@ -65,7 +65,7 @@
       "typeVersion": 2,
       "position": [
         1600,
-        160
+        128
       ],
       "credentials": {
         "notionApi": {
@@ -89,7 +89,7 @@
       "typeVersion": 1.3,
       "position": [
         752,
-        -16
+        -48
       ],
       "id": "623b9f27-ae74-43b2-bca6-ea53509cd15b",
       "name": "OpenAI Chat Model",
@@ -110,7 +110,7 @@
       "typeVersion": 1,
       "position": [
         240,
-        160
+        128
       ],
       "id": "7f138e8e-a9cc-4e45-ba64-e96276865638",
       "name": "Scrape a URL and get content as markdown or other formats",
@@ -130,7 +130,7 @@
       "typeVersion": 1.3,
       "position": [
         880,
-        -16
+        -48
       ],
       "id": "dd51a87e-f49b-4d76-ba45-49fc6c2452b1",
       "name": "Structured Output Parser"
@@ -173,7 +173,7 @@
       "typeVersion": 1.3,
       "position": [
         -432,
-        -128
+        -160
       ],
       "id": "7ba2af4e-caf3-4767-858a-61dcc08fd47b",
       "name": "Call 'Check link in DB'"
@@ -189,7 +189,7 @@
       "typeVersion": 1.2,
       "position": [
         -1104,
-        -128
+        -160
       ],
       "id": "b065d512-9e4b-4ec1-951c-5099f5ba2a00",
       "name": "Telegram Trigger",
@@ -209,7 +209,7 @@
       "typeVersion": 2,
       "position": [
         -880,
-        -32
+        -64
       ],
       "id": "16b223a2-2b6a-434f-b9df-799e08619d9a",
       "name": "Extract URL from TG message"
@@ -224,7 +224,7 @@
       "typeVersion": 1.2,
       "position": [
         16,
-        -224
+        -256
       ],
       "id": "ed100138-87c1-4c35-967b-70d7c6671197",
       "name": "TG: send exists message ",
@@ -246,7 +246,7 @@
       "typeVersion": 1.2,
       "position": [
         1824,
-        160
+        128
       ],
       "id": "07cfa6d0-e74f-4bed-a8d0-47dd4bb68367",
       "name": "Send a text message",
@@ -268,8 +268,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        752,
-        -240
+        744,
+        -272
       ],
       "id": "4f02f609-61e2-4d70-8a70-823c5f0c1920",
       "name": "Agent: info extractor"
@@ -304,7 +304,7 @@
       "typeVersion": 2.3,
       "position": [
         -208,
-        -128
+        -160
       ],
       "id": "6aaa5dc3-158d-4857-823f-91ebce231813",
       "name": "Do yoy have link in your DB?"
@@ -339,7 +339,7 @@
       "typeVersion": 2.3,
       "position": [
         -656,
-        -32
+        -64
       ],
       "id": "c39a9a0d-bca4-418b-b3f7-0637b7d3627b",
       "name": "Do you have a link in mesasge?"
@@ -354,7 +354,7 @@
       "typeVersion": 1.2,
       "position": [
         -432,
-        64
+        32
       ],
       "id": "b1787c9d-030f-4a13-9aa0-83445b25c92e",
       "name": "TG: send no url message",
@@ -496,7 +496,7 @@
       "typeVersion": 2.6,
       "position": [
         1600,
-        -32
+        -64
       ],
       "id": "b6c4face-d867-412c-b49d-03d3a6a93cde",
       "name": "Insert rows in a table",
@@ -517,7 +517,7 @@
       "typeVersion": 2.6,
       "position": [
         240,
-        -32
+        -64
       ],
       "id": "c6d127da-3d21-4a1a-81c3-094e1293ed95",
       "name": "Select distince facets",
@@ -535,7 +535,7 @@
       "typeVersion": 1,
       "position": [
         16,
-        -32
+        -64
       ],
       "id": "4b49cd3b-7780-44c1-be0e-7b283dd6e5f1",
       "name": "URL was not processed yet"
@@ -550,7 +550,7 @@
       "typeVersion": 3.2,
       "position": [
         464,
-        64
+        32
       ],
       "id": "b36a922a-1fb5-41d9-8ad2-bd79f89971f6",
       "name": "Merge"
@@ -565,7 +565,7 @@
       "typeVersion": 1.2,
       "position": [
         240,
-        -224
+        -256
       ],
       "id": "764f2d09-4c3c-456e-a3ed-a201ebe9f0b8",
       "name": "TG: send process message",
@@ -583,7 +583,7 @@
       "typeVersion": 1,
       "position": [
         -1104,
-        64
+        32
       ],
       "id": "e07bec96-7ef5-4a3a-bf87-46e826e28639",
       "name": "When clicking ‘Execute workflow’"
@@ -611,7 +611,7 @@
       "typeVersion": 2.6,
       "position": [
         816,
-        496
+        456
       ],
       "id": "df099778-718a-406f-a9df-36bb87cbaac2",
       "name": "Select rows from a table in Postgres",
@@ -621,22 +621,6 @@
           "name": "Postgres account"
         }
       }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=**ROLE**\nYou are a Facet Classification Specialist.\n\nYour job is to assign facet values to a resource using only the provided input signals and the existing facet database.\n\nYou perform classification only.\nDo not explain anything.\n\n---\n\n# INPUT\n\nUSER_INTENTION: {{ $('Extract URL from TG message').item.json.text }}\nURL: {{ $('Extract URL from TG message').item.json.url }}\nRAW_METADATA: {{ JSON.stringify($json.data.metadata, null, 2) }}\n\n---\n\n# CORE PRINCIPLE\n\nEvery facet must be grounded in explicit evidence from:\n- USER_INTENTION\n- URL\n- RAW_METADATA\n\nDo not infer capabilities, topics, or technologies that are not clearly supported by the input.\n\nIf a candidate facet is weakly supported or speculative, discard it.\n\n---\n\n# TASK\n\nClassify the resource into these facet groups:\n\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\nReturn only the most relevant facets.\n\n---\n\n# INTERNAL WORKFLOW\n\nFollow this process internally:\n\nStep 1. Generate up to 10 candidate facets from the input alone.\nUse only evidence from USER_INTENTION, URL, and RAW_METADATA.\n\nStep 2. Compare those 10 candidates against FACETS_FROM_DB.\nIf an existing database facet matches the same concept well, reuse the database facet spelling exactly.\n\nStep 3. Re-rank all candidates by relevance and evidence strength.\n\nStep 4. Keep only the best candidates.\nMaximum total facets across all groups: 5.\n\nStep 5. Place each selected facet into the most appropriate group:\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\n---\n\n# FACET GROUP DEFINITIONS\n\nfacet_format\nThe type of resource itself.\nThis describes what the resource is.\n\nfacet_topic\nWhat the resource is about.\nThis describes the subject, domain, or concept.\n\nfacet_function\nWhat the resource is used for.\nThis describes the practical purpose or capability.\n\nfacet_tech_stack\nNamed technologies actually used by the resource itself.\n\n---\n\n# SELECTION RULES\n\nPrefer facets that are:\n- explicitly supported\n- specific\n- reusable\n- high-signal\n\nAvoid facets that are:\n- vague\n- generic\n- speculative\n- marketing-style\n- not grounded in the input\n\nDiscard low-signal facets such as:\nsoftware, project, tool, app, useful, system\n\nDo not include hosting websites as tech_stack unless the input clearly shows they are part of the resource technology itself.\n\n---\n\n# NORMALIZATION RULES\n\nWhen creating a NEW facet:\n- prefer a short canonical form\n- lowercase by default\n- use a single word when possible\n- avoid punctuation\n- avoid decorative wording\n\nIf FACETS_FROM_DB already contains a matching concept, reuse that value exactly instead of inventing a variant.\n\nRemove duplicates.\n\n---\n\n# LIMITS\n\n- Up to 2 values in facet_format\n- Up to 3 values in facet_topic\n- Up to 2 values in facet_function\n- Up to 2 values in facet_tech_stack\n- Maximum total facets across all groups: 5\n\nReturn empty arrays where nothing is strongly supported.\n\n---",
-        "hasOutputParser": true,
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
-      "position": [
-        752,
-        272
-      ],
-      "id": "17ef72e3-fa3f-4905-83bf-01d01b300e4e",
-      "name": "AI Agent"
     },
     {
       "parameters": {
@@ -653,7 +637,7 @@
       "typeVersion": 1.3,
       "position": [
         688,
-        496
+        456
       ],
       "id": "cf89078a-8f41-45eb-8d15-19705df73229",
       "name": "OpenAI Chat Model1",
@@ -672,7 +656,7 @@
       "typeVersion": 1.3,
       "position": [
         944,
-        496
+        456
       ],
       "id": "bf678d59-42dc-4a62-b0fe-a154acf91c9e",
       "name": "Structured Output Parser1"
@@ -683,7 +667,7 @@
       "typeVersion": 3.2,
       "position": [
         1152,
-        64
+        32
       ],
       "id": "5cfb58d2-9e9d-4611-b4d9-458c438d9d4d",
       "name": "Final bookmark"
@@ -696,7 +680,7 @@
       "typeVersion": 2,
       "position": [
         1376,
-        64
+        32
       ],
       "id": "8432a589-c42a-4ed1-89fa-3700cf2e5c2c",
       "name": "Code in JavaScript"
@@ -709,12 +693,28 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1040,
-        256
+        976,
+        288
       ],
       "typeVersion": 1,
       "id": "e8476ab5-e4f9-4f1d-a200-be282de3ef02",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=**ROLE**\nYou are a Facet Classification Specialist.\n\nYour job is to assign facet values to a resource using only the provided input signals and the existing facet database.\n\nYou perform classification only.\nDo not explain anything.\n\n---\n\n# INPUT\n\nUSER_INTENTION: {{ $('Extract URL from TG message').item.json.text }}\nURL: {{ $('Extract URL from TG message').item.json.url }}\nRAW_METADATA: {{ JSON.stringify($json.data.metadata, null, 2) }}\n\n---\n\n# CORE PRINCIPLE\n\nEvery facet must be grounded in explicit evidence from:\n- USER_INTENTION\n- URL\n- RAW_METADATA\n\nDo not infer capabilities, topics, or technologies that are not clearly supported by the input.\n\nIf a candidate facet is weakly supported or speculative, discard it.\n\n---\n\n# TASK\n\nClassify the resource into these facet groups:\n\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\nReturn only the most relevant facets.\n\n---\n\n# INTERNAL WORKFLOW\n\nFollow this process internally:\n\nStep 1. Generate up to 10 candidate facets from the input alone.\nUse only evidence from USER_INTENTION, URL, and RAW_METADATA.\n\nStep 2. Compare those 10 candidates against FACETS_FROM_DB.\nIf an existing database facet matches the same concept well, reuse the database facet spelling exactly.\n\nStep 3. Re-rank all candidates by relevance and evidence strength.\n\nStep 4. Keep only the best candidates.\nMaximum total facets across all groups: 5.\n\nStep 5. Place each selected facet into the most appropriate group:\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\n---\n\n# FACET GROUP DEFINITIONS\n\nfacet_format\nThe type of resource itself.\nThis describes what the resource is.\n\nfacet_topic\nWhat the resource is about.\nThis describes the subject, domain, or concept.\n\nfacet_function\nWhat the resource is used for.\nThis describes the practical purpose or capability.\n\nfacet_tech_stack\nNamed technologies actually used by the resource itself.\n\n---\n\n# SELECTION RULES\n\nPrefer facets that are:\n- explicitly supported\n- specific\n- reusable\n- high-signal\n\nAvoid facets that are:\n- vague\n- generic\n- speculative\n- marketing-style\n- not grounded in the input\n\nDiscard low-signal facets such as:\nsoftware, project, tool, app, useful, system\n\nDo not include hosting websites as tech_stack unless the input clearly shows they are part of the resource technology itself.\n\n---\n\n# NORMALIZATION RULES\n\nWhen creating a NEW facet:\n- prefer a short canonical form\n- lowercase by default\n- use a single word when possible\n- avoid punctuation\n- avoid decorative wording\n\nIf FACETS_FROM_DB already contains a matching concept, reuse that value exactly instead of inventing a variant.\n\nRemove duplicates.\n\n---\n\n# LIMITS\n\n- Up to 2 values in facet_format\n- Up to 3 values in facet_topic\n- Up to 2 values in facet_function\n- Up to 2 values in facet_tech_stack\n- Maximum total facets across all groups: 5\n\nReturn empty arrays where nothing is strongly supported.\n\n---",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        744,
+        232
+      ],
+      "id": "17ef72e3-fa3f-4905-83bf-01d01b300e4e",
+      "name": "Agent: Facet extractor"
     }
   ],
   "pinData": {
@@ -915,7 +915,7 @@
             "index": 0
           },
           {
-            "node": "AI Agent",
+            "node": "Agent: Facet extractor",
             "type": "main",
             "index": 0
           }
@@ -937,20 +937,9 @@
       "ai_tool": [
         [
           {
-            "node": "AI Agent",
+            "node": "Agent: Facet extractor",
             "type": "ai_tool",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent": {
-      "main": [
-        [
-          {
-            "node": "Final bookmark",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -959,7 +948,7 @@
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent",
+            "node": "Agent: Facet extractor",
             "type": "ai_languageModel",
             "index": 0
           }
@@ -970,7 +959,7 @@
       "ai_outputParser": [
         [
           {
-            "node": "AI Agent",
+            "node": "Agent: Facet extractor",
             "type": "ai_outputParser",
             "index": 0
           }
@@ -1003,6 +992,17 @@
           }
         ]
       ]
+    },
+    "Agent: Facet extractor": {
+      "main": [
+        [
+          {
+            "node": "Final bookmark",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -1011,7 +1011,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "1958e3a6-2c00-456c-8268-d9424522ebf9",
+  "versionId": "9cc47a13-37fa-45f0-82ab-850872c94873",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"

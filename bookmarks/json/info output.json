@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "Title": {
+      "type": "string"
+    },
+    "URL": {
+      "type": "string"
+    },
+    "Like": {
+      "type": "boolean"
+    },
+    "Cover": {
+      "type": "string"
+    },
+    "Person": {
+      "type": "string"
+    },
+    "Raw metadata": {
+      "type": "string"
+    },
+    "Saved": {
+      "type": "string"
+    },
+    "Tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
