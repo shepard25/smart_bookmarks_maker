@@ -30,6 +30,22 @@
             {
               "key": "Tags|multi_select",
               "multiSelectValue": "={{ $json.output.Tags  || [] }}"
+            },
+            {
+              "key": "Format|multi_select",
+              "multiSelectValue": "={{ $json.output.facet_format }}"
+            },
+            {
+              "key": "Topic|multi_select",
+              "multiSelectValue": "={{ $json.output.facet_topic }}"
+            },
+            {
+              "key": "Function|multi_select",
+              "multiSelectValue": "={{ $json.output.facet_function }}"
+            },
+            {
+              "key": "Tech Stack|multi_select",
+              "multiSelectValue": "={{ $json.output.facet_tech_stack }}"
             }
           ]
         },
@@ -48,8 +64,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        1088,
-        96
+        1600,
+        160
       ],
       "credentials": {
         "notionApi": {
@@ -72,8 +88,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        624,
-        416
+        752,
+        -16
       ],
       "id": "623b9f27-ae74-43b2-bca6-ea53509cd15b",
       "name": "OpenAI Chat Model",
@@ -93,8 +109,8 @@
       "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
       "typeVersion": 1,
       "position": [
-        176,
-        288
+        240,
+        160
       ],
       "id": "7f138e8e-a9cc-4e45-ba64-e96276865638",
       "name": "Scrape a URL and get content as markdown or other formats",
@@ -108,13 +124,13 @@
     {
       "parameters": {
         "schemaType": "manual",
-        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Title\": {\n      \"type\": \"string\"\n    },\n    \"URL\": {\n      \"type\": \"string\"\n    },\n    \"Like\": {\n      \"type\": \"boolean\"\n    },\n    \"Cover\": {\n      \"type\": \"string\"\n    },\n    \"Person\": {\n      \"type\": \"string\"\n    },\n    \"Raw metadata\": {\n      \"type\": \"string\"\n    },\n    \"Saved\": {\n      \"type\": \"string\"\n    },\n    \"Tags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_format\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_topic\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_function\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"facet_tech_stack\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"Title\": {\n      \"type\": \"string\"\n    },\n    \"URL\": {\n      \"type\": \"string\"\n    },\n    \"Like\": {\n      \"type\": \"boolean\"\n    },\n    \"Cover\": {\n      \"type\": \"string\"\n    },\n    \"Person\": {\n      \"type\": \"string\"\n    },\n    \"Raw metadata\": {\n      \"type\": \"string\"\n    },\n    \"Saved\": {\n      \"type\": \"string\"\n    },\n    \"Tags\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
         880,
-        416
+        -16
       ],
       "id": "dd51a87e-f49b-4d76-ba45-49fc6c2452b1",
       "name": "Structured Output Parser"
@@ -131,8 +147,21 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {},
-          "matchingColumns": [],
-          "schema": [],
+          "matchingColumns": [
+            "url"
+          ],
+          "schema": [
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
@@ -143,8 +172,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -496,
-        96
+        -432,
+        -128
       ],
       "id": "7ba2af4e-caf3-4767-858a-61dcc08fd47b",
       "name": "Call 'Check link in DB'"
@@ -159,8 +188,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1168,
-        96
+        -1104,
+        -128
       ],
       "id": "b065d512-9e4b-4ec1-951c-5099f5ba2a00",
       "name": "Telegram Trigger",
@@ -174,13 +203,13 @@
     },
     {
       "parameters": {
-        "jsCode": "const text = $input.first().json.message.text || '';\nconst match = text.match(/https?:\\/\\/\\S+/);\nreturn [\n  {\n    json: {\n      url: match ? match[0] : null,\n    },\n  },\n];"
+        "jsCode": "const text = $input.first().json.message.text || '';\n\nconst urlMatch = text.match(/https?:\\/\\/\\S+/);\nconst url = urlMatch ? urlMatch[0] : null;\n\nlet cleanText = text;\nif (url) {\n  cleanText = text.replace(url, '').replace(/\\s+/g, ' ').trim();\n}\n\nreturn [\n  {\n    json: {\n      url: url,\n      text: cleanText\n    }\n  }\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -944,
-        192
+        -880,
+        -32
       ],
       "id": "16b223a2-2b6a-434f-b9df-799e08619d9a",
       "name": "Extract URL from TG message"
@@ -188,14 +217,14 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
-        "text": "=Already exists! \nYou can find it here: {{ $json.url }}",
+        "text": "=Already exists! ",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -48,
-        0
+        16,
+        -224
       ],
       "id": "ed100138-87c1-4c35-967b-70d7c6671197",
       "name": "TG: send exists message ",
@@ -216,8 +245,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1312,
-        192
+        1824,
+        160
       ],
       "id": "07cfa6d0-e74f-4bed-a8d0-47dd4bb68367",
       "name": "Send a text message",
@@ -232,33 +261,18 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=**ROLE**\nYou are a Senior Data Ontologist & Bookmark Librarian. Extract high-signal metadata from any web resource to populate a Notion Smart Bookmark.\n\n**INPUTS**\n- FIRECRAWL_METADATA: {{ $json.data.metadata }}\n- FIRECRAWL_MARKDOWN: {{ $json.data.markdown }}\n- EXISTING_FACETS_LIBRARY (NOT CONTENT):\n  - Formats: {{ $json.facets.format }}\n  - Topics: {{ $json.facets.topic }}\n  - Functions: {{ $json.facets.function }}\n  - Tech Stack: {{ $json.facets.tech_stack }}\n\n**OUTPUT (STRICT)**\nReturn ONLY these keys (exact spelling), and always include all of them:\nTitle, URL, Like, Cover, Person, Raw metadata, Saved, Tags, facet_format, facet_topic, facet_function, facet_tech_stack\n\n**DEFAULTS**\n- Unknown string => \"\"\n- Unknown arrays => []\n\n**NO HALLUCINATIONS**\nUse only information explicitly present in FIRECRAWL_METADATA or FIRECRAWL_MARKDOWN. If not present, leave empty.\n\n**URL**\nPrefer canonical/og:url from metadata; else keep the input URL.\n\n**TITLE**\nPrefer metadata title/og:title; else first H1 in markdown; else domain. Remove obvious boilerplate suffixes.\n\n**PERSON (SOURCE/PUBLISHER)**\nChoose the primary publisher/source identity (not the speaker).\n- YouTube/video: channel/creator name if explicitly present (e.g., “Channel”, “Uploader”, “Author”, “site_name”). If unclear, use site/domain.\n- GitHub: owner/org if explicitly present; else site/domain.\n- Articles/docs: author if explicitly present; else publication/site name.\n\n**COVER (ABSOLUTE URL ONLY)**\nPick the best visual URL:\n1) og:image / twitter:image / explicit thumbnail in metadata\n2) strong hero/main image URL from markdown\n3) if the URL itself is a direct image (jpg/png/webp/gif), use it\nMust be absolute; if only relative exists => \"\".\n\n**RAW METADATA (ONE LINE, FACTUAL)**\nOne compact line using only explicit facts (duration/views/published/stars/language/license/etc). If no reliable facts => \"\".\n\n**FACETS & TAGS (CRITICAL)**\nTreat EXISTING_FACETS_LIBRARY as a lookup dictionary ONLY, never as page content.\nIf the library text appears inside FIRECRAWL_MARKDOWN (e.g., headings like “EXISTING_FACETS_LIBRARY” or lists of facets), IGNORE that section completely for extraction and tagging.\n\n**FACET RULES**\n- Always fill facet_format, facet_topic, facet_function, facet_tech_stack (arrays may be empty).\n- Prefer matching existing facet values from the library (semantic match).\n- New tags are allowed when clearly central AND appear in the title or early description/content (verbatim or near-verbatim). Keep English, 1–3 words.\n\nSuggested limits:\n- facet_format: up to 2\n- facet_topic: up to 3\n- facet_function: up to 4\n- facet_tech_stack: up to 4\n\n**TAGS**\nTags MUST be the unique union of all facet_* arrays (no extra tags outside facets). Deduplicate and keep exact library spelling when reused.",
+        "text": "=**ROLE**\nYou are a Metadata Extraction Specialist.\nYour only job: extract and clean factual fields from raw web metadata.\nNo classification. No inference beyond explicit metadata.\n\n---\n\n# INPUT\n\nUSER_MESSAGE: {{ $('Extract URL from TG message').item.json.text }}\nURL: {{ $('Extract URL from TG message').item.json.url }}\n\nFIRECRAWL_METADATA: {{ JSON.stringify($json.data.metadata, null, 2) }}\n\n---\n\n# OUTPUT\nReturn exactly one JSON object.\nReturn ALL keys with exact spelling.\n\n{\n  \"source_type\": \"\",\n  \"Title\": \"\",\n  \"URL\": \"\",\n  \"Like\": false,\n  \"Cover\": \"\",\n  \"Person\": \"\",\n  \"Raw metadata\": \"\",\n  \"description_for_classifier\": \"\",\n  \"Saved\": \"\",\n  \"Tags\": [],\n  \"facet_format\": [],\n  \"facet_topic\": [],\n  \"facet_function\": [],\n  \"facet_tech_stack\": []\n}\n\n---\n\n# DEFAULTS\n\n- Unknown string -> \"\"\n- Unknown boolean -> false\n- Unknown array -> []\n- Do not omit keys\n\n---\n\n# RULES\n\n## source_type\nDetect from URL/domain. Use exactly one of:\ngithub_repo | youtube_video | huggingface_model | article | documentation | other\n\n## URL\nPriority:\n1. og:url\n2. metadata url\n3. input URL\n\n## Title\nPriority:\n1. og:title\n2. title\n3. first H1\n4. domain\n\nCleaning rules — apply strictly in order:\n1. Strip \"GitHub - owner/repo: \" prefix\n2. Strip \" · GitHub\", \" - GitHub\", \" | GitHub\", \" | YouTube\" suffixes\n3. For GitHub repos: if result is still longer than 60 chars, extract repo name from nwo field\n4. For YouTube: keep video title as-is after suffix stripping\n5. Max 60 characters. Hard limit. Cut at last full word if needed.\n\n## Person\nPrimary identity of publisher:\n- GitHub -> repository owner from octolytics-dimension-user_login or nwo prefix\n- YouTube -> channel name from metadata\n- HuggingFace -> model owner from URL path\n- Other -> og:site_name or domain\n\n## Cover\nAbsolute URL only.\nPriority:\n1. og:image\n2. twitter:image\n3. any absolute image URL in metadata\nIf none -> \"\"\n\n## Raw metadata\nOne factual line only.\nOnly confirmed facts.\nNever say \"not stated\".\n\nExamples:\n- GitHub repository msitarzewski/agency-agents; public; not forked.\n- YouTube video; channel: Tranquility Music.\n- HuggingFace model nvidia/parakeet-ctc-1.1b.\n\n## description_for_classifier\nClean text for downstream classifier.\nCombine in order, separated by \" | \":\n1. og:description or description, trimmed to 300 chars\n2. source_type\n3. Person\n\nStrip HTML and boilerplate.\n\n## Other fields\n- Like -> false\n- Saved -> USER_MESSAGE with URL removed and spaces normalized\n- Tags -> []\n- facet_format -> []\n- facet_topic -> []\n- facet_function -> []\n- facet_tech_stack -> []\n\n---\n\n# IMPORTANT\n- Return JSON only\n- No markdown\n- No explanations\n- No wrapper\n- No extra keys",
         "hasOutputParser": true,
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        688,
-        192
+        752,
+        -240
       ],
       "id": "4f02f609-61e2-4d70-8a70-823c5f0c1920",
       "name": "Agent: info extractor"
-    },
-    {
-      "parameters": {
-        "toolDescription": "Use this HTTP request tool in case you dont have enought initial data to formuale JSON",
-        "url": "={{ $('Scrape a URL and get content as markdown or other formats').item.json.data.metadata.ogUrl }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequestTool",
-      "typeVersion": 4.4,
-      "position": [
-        752,
-        416
-      ],
-      "id": "b17b8ef1-eb8c-4354-8751-970361f0224a",
-      "name": "HTTP Request"
     },
     {
       "parameters": {
@@ -289,8 +303,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -272,
-        96
+        -208,
+        -128
       ],
       "id": "6aaa5dc3-158d-4857-823f-91ebce231813",
       "name": "Do yoy have link in your DB?"
@@ -324,8 +338,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -720,
-        192
+        -656,
+        -32
       ],
       "id": "c39a9a0d-bca4-418b-b3f7-0637b7d3627b",
       "name": "Do you have a link in mesasge?"
@@ -339,8 +353,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -496,
-        288
+        -432,
+        64
       ],
       "id": "b1787c9d-030f-4a13-9aa0-83445b25c92e",
       "name": "TG: send no url message",
@@ -481,8 +495,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1088,
-        288
+        1600,
+        -32
       ],
       "id": "b6c4face-d867-412c-b49d-03d3a6a93cde",
       "name": "Insert rows in a table",
@@ -494,17 +508,6 @@
       }
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -1168,
-        288
-      ],
-      "id": "e85f9c05-cbc0-42bd-b6a2-c481c5fa2f02",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
       "parameters": {
         "operation": "executeQuery",
         "query": "SELECT json_build_object(\n  'format',      (SELECT array_agg(DISTINCT f) FROM bookmarks, unnest(facet_format) f),\n  'topic',       (SELECT array_agg(DISTINCT t) FROM bookmarks, unnest(facet_topic) t),\n  'function',    (SELECT array_agg(DISTINCT fn) FROM bookmarks, unnest(facet_function) fn),\n  'tech_stack',  (SELECT array_agg(DISTINCT ts) FROM bookmarks, unnest(facet_tech_stack) ts)\n) AS facets;",
@@ -513,8 +516,8 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        176,
-        96
+        240,
+        -32
       ],
       "id": "c6d127da-3d21-4a1a-81c3-094e1293ed95",
       "name": "Select distince facets",
@@ -531,8 +534,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        -48,
-        192
+        16,
+        -32
       ],
       "id": "4b49cd3b-7780-44c1-be0e-7b283dd6e5f1",
       "name": "URL was not processed yet"
@@ -547,10 +550,171 @@
       "typeVersion": 3.2,
       "position": [
         464,
-        192
+        64
       ],
       "id": "b36a922a-1fb5-41d9-8ad2-bd79f89971f6",
       "name": "Merge"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "Ok, lemme save it to ya",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        -224
+      ],
+      "id": "764f2d09-4c3c-456e-a3ed-a201ebe9f0b8",
+      "name": "TG: send process message",
+      "webhookId": "89ea10bc-337c-4742-88b6-4db637573883",
+      "credentials": {
+        "telegramApi": {
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        64
+      ],
+      "id": "e07bec96-7ef5-4a3a-bf87-46e826e28639",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "With this tool you can access to all existing facets in DB. You can check if your ideas already matching existing facets or find more appropriate to avoid dumplication.",
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "bookmarks",
+          "mode": "list",
+          "cachedResultName": "bookmarks"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        816,
+        496
+      ],
+      "id": "df099778-718a-406f-a9df-36bb87cbaac2",
+      "name": "Select rows from a table in Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=**ROLE**\nYou are a Facet Classification Specialist.\n\nYour job is to assign facet values to a resource using only the provided input signals and the existing facet database.\n\nYou perform classification only.\nDo not explain anything.\n\n---\n\n# INPUT\n\nUSER_INTENTION: {{ $('Extract URL from TG message').item.json.text }}\nURL: {{ $('Extract URL from TG message').item.json.url }}\nRAW_METADATA: {{ JSON.stringify($json.data.metadata, null, 2) }}\n\n---\n\n# CORE PRINCIPLE\n\nEvery facet must be grounded in explicit evidence from:\n- USER_INTENTION\n- URL\n- RAW_METADATA\n\nDo not infer capabilities, topics, or technologies that are not clearly supported by the input.\n\nIf a candidate facet is weakly supported or speculative, discard it.\n\n---\n\n# TASK\n\nClassify the resource into these facet groups:\n\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\nReturn only the most relevant facets.\n\n---\n\n# INTERNAL WORKFLOW\n\nFollow this process internally:\n\nStep 1. Generate up to 10 candidate facets from the input alone.\nUse only evidence from USER_INTENTION, URL, and RAW_METADATA.\n\nStep 2. Compare those 10 candidates against FACETS_FROM_DB.\nIf an existing database facet matches the same concept well, reuse the database facet spelling exactly.\n\nStep 3. Re-rank all candidates by relevance and evidence strength.\n\nStep 4. Keep only the best candidates.\nMaximum total facets across all groups: 5.\n\nStep 5. Place each selected facet into the most appropriate group:\n- facet_format\n- facet_topic\n- facet_function\n- facet_tech_stack\n\n---\n\n# FACET GROUP DEFINITIONS\n\nfacet_format\nThe type of resource itself.\nThis describes what the resource is.\n\nfacet_topic\nWhat the resource is about.\nThis describes the subject, domain, or concept.\n\nfacet_function\nWhat the resource is used for.\nThis describes the practical purpose or capability.\n\nfacet_tech_stack\nNamed technologies actually used by the resource itself.\n\n---\n\n# SELECTION RULES\n\nPrefer facets that are:\n- explicitly supported\n- specific\n- reusable\n- high-signal\n\nAvoid facets that are:\n- vague\n- generic\n- speculative\n- marketing-style\n- not grounded in the input\n\nDiscard low-signal facets such as:\nsoftware, project, tool, app, useful, system\n\nDo not include hosting websites as tech_stack unless the input clearly shows they are part of the resource technology itself.\n\n---\n\n# NORMALIZATION RULES\n\nWhen creating a NEW facet:\n- prefer a short canonical form\n- lowercase by default\n- use a single word when possible\n- avoid punctuation\n- avoid decorative wording\n\nIf FACETS_FROM_DB already contains a matching concept, reuse that value exactly instead of inventing a variant.\n\nRemove duplicates.\n\n---\n\n# LIMITS\n\n- Up to 2 values in facet_format\n- Up to 3 values in facet_topic\n- Up to 2 values in facet_function\n- Up to 2 values in facet_tech_stack\n- Maximum total facets across all groups: 5\n\nReturn empty arrays where nothing is strongly supported.\n\n---",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        752,
+        272
+      ],
+      "id": "17ef72e3-fa3f-4905-83bf-01d01b300e4e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        496
+      ],
+      "id": "cf89078a-8f41-45eb-8d15-19705df73229",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "DUTZLzREZGc8fX9y",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"facet_format\": [\"plugin\", \"repository\"],\n  \"facet_topic\": [\"obs\", \"streaming\", \"shaders\"],\n  \"facet_function\": [\"filtering\"],\n  \"facet_tech_stack\": [\"OBS\", \"GitHub\"]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        944,
+        496
+      ],
+      "id": "bf678d59-42dc-4a62-b0fe-a154acf91c9e",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1152,
+        64
+      ],
+      "id": "5cfb58d2-9e9d-4611-b4d9-458c438d9d4d",
+      "name": "Final bookmark"
+    },
+    {
+      "parameters": {
+        "jsCode": "const merged = {};\n\nfor (const item of $input.all()) {\n  const obj = item.json.output || {};\n  Object.assign(merged, obj);\n}\n\nreturn [\n  {\n    json: {\n      output: merged\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1376,
+        64
+      ],
+      "id": "8432a589-c42a-4ed1-89fa-3700cf2e5c2c",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "### Добавить реранкер, сделать пипилине - кандидаты, Facet selector / reranker",
+        "height": 112,
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1040,
+        256
+      ],
+      "typeVersion": 1,
+      "id": "e8476ab5-e4f9-4f1d-a200-be282de3ef02",
+      "name": "Sticky Note"
     }
   ],
   "pinData": {
@@ -574,7 +738,7 @@
               "first_name": "Test",
               "language_code": "ru"
             },
-            "text": "https://github.com/grikdotnet/ai-stenographer"
+            "text": "https://github.com/66HEX/frame буду сжимать свои видосы"
           }
         }
       }
@@ -662,24 +826,8 @@
       "main": [
         [
           {
-            "node": "Notion Create",
+            "node": "Final bookmark",
             "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Insert rows in a table",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "ai_tool": [
-        [
-          {
-            "node": "Agent: info extractor",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -723,24 +871,7 @@
     },
     "Insert rows in a table": {
       "main": [
-        [
-          {
-            "node": "Send a text message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Extract URL from TG message",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Select distince facets": {
@@ -766,6 +897,11 @@
             "node": "Scrape a URL and get content as markdown or other formats",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "TG: send process message",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -777,18 +913,105 @@
             "node": "Agent: info extractor",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Extract URL from TG message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select rows from a table in Postgres": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Final bookmark",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final bookmark": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Notion Create",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "2001dacf-55da-473a-b69d-b249fcb72b90",
+  "versionId": "1958e3a6-2c00-456c-8268-d9424522ebf9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"
