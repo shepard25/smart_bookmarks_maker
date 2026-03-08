@@ -96,7 +96,21 @@ The `bookmarks` table currently uses these arrays:
 
 ## Quick Start
 
-### 1. Start the services
+### 1. Create a local `.env`
+
+Copy `.env.example` to `.env` and replace all placeholder values before starting the stack.
+
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+### 2. Start the services
 
 ```bash
 docker compose up -d
@@ -107,13 +121,9 @@ After startup:
 - `n8n`: `http://localhost:5678`
 - `pgAdmin`: `http://localhost:5050`
 
-Local default credentials from compose:
+Ports are still defined through `.env`, but credentials and the encryption key are no longer hardcoded in `docker-compose.yaml`.
 
-- `n8n`: `admin / admin`
-- `pgAdmin`: `admin@admin.com / admin`
-- `Postgres`: `n8n / n8n / n8n`
-
-### 2. Import workflows into n8n
+### 3. Import workflows into n8n
 
 Import both JSON files from `bookmarks/workflow`.
 
@@ -122,7 +132,7 @@ Recommended order:
 1. `Check link in DB.json`
 2. `website to bookmark _ AI tags -_ Notion upsert.json`
 
-### 3. Configure credentials in n8n
+### 4. Configure credentials in n8n
 
 You need working credentials for:
 
@@ -132,43 +142,14 @@ You need working credentials for:
 - Postgres
 - Notion
 
-### 4. Check the webhook URL
+The exported workflow JSON files in this repo are sanitized. After import, replace the placeholder credential IDs and names with your own n8n credentials.
 
-The compose file currently contains:
+### 5. Check the webhook URL
+
+The compose file now reads the webhook URL from `.env`:
 
 ```env
-WEBHOOK_URL=https://uncleavable-phung-nonfeeling.ngrok-free.dev
+WEBHOOK_URL=https://your-current-tunnel.example.com
 ```
 
 If this address is no longer valid, the Telegram trigger will not receive incoming messages correctly. For local development, this value should be updated to match the current tunnel.
-
-## Things To Fix Before Real Use
-
-- `docker-compose.yaml` currently hardcodes usernames, passwords, and `N8N_ENCRYPTION_KEY`.
-- The workflow uses a test `user_id = 777` when inserting into `bookmarks`.
-- The repo contains stateful directories such as `n8n_data`, `postgres_data`, and `pgadmin_data`; for a public repository this is usually unnecessary.
-- One workflow contains direct references to a specific Notion database and named credentials from a local instance.
-
-## Hero Image Idea
-
-If you want to replace the current SVG with a more polished hero image, the best direction is a cinematic product scene rather than a logo-style graphic.
-
-Suggested prompt:
-
-```text
-Cinematic product illustration of an AI bookmarking pipeline. Telegram chat on the left, glowing data stream in the center, structured knowledge cards and database facets on the right. Warm editorial lighting, tactile glass UI panels, orange-teal palette, modern workflow automation aesthetic, high detail, 16:9.
-```
-
-Suggested headline:
-
-`Turn raw links into structured knowledge`
-
-## Limitations
-
-I can locally generate and save an illustration, banner, SVG diagram, or mock-style cover in the repo, like the one used in this README.
-
-I cannot directly generate a photorealistic image "like Midjourney / Flux / DALL-E" in the current environment, because there is no connected image model here. But I can:
-
-- prepare a precise prompt;
-- create an SVG/PNG cover in code;
-- embed the generated file into the README.

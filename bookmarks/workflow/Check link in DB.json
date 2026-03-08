@@ -37,8 +37,8 @@
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "WGrG0fYFjpNI5oEC",
-          "name": "Postgres account"
+          "id": "__POSTGRES_CREDENTIAL_ID__",
+          "name": "__POSTGRES_CREDENTIAL_NAME__"
         }
       }
     },

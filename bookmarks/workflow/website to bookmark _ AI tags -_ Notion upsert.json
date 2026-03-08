@@ -6,10 +6,10 @@
         "resource": "databasePage",
         "databaseId": {
           "__rl": true,
-          "value": "8e53e047-0bba-4a15-8cc1-e1c8d1583905",
+          "value": "__NOTION_DATABASE_ID__",
           "mode": "list",
-          "cachedResultName": "Bookmark",
-          "cachedResultUrl": "https://www.notion.so/8e53e0470bba4a158cc1e1c8d1583905"
+          "cachedResultName": "__NOTION_DATABASE_NAME__",
+          "cachedResultUrl": "https://www.notion.so/__NOTION_DATABASE_ID__"
         },
         "title": "={{ $json.output.Title }}",
         "propertiesUi": {
@@ -69,8 +69,8 @@
       ],
       "credentials": {
         "notionApi": {
-          "id": "bDm8PT41kde5yZFK",
-          "name": "bookmarks"
+          "id": "__NOTION_CREDENTIAL_ID__",
+          "name": "__NOTION_CREDENTIAL_NAME__"
         }
       }
     },
@@ -95,8 +95,8 @@
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "DUTZLzREZGc8fX9y",
-          "name": "OpenAi account"
+          "id": "__OPENAI_CREDENTIAL_ID__",
+          "name": "__OPENAI_CREDENTIAL_NAME__"
         }
       }
     },
@@ -116,8 +116,8 @@
       "name": "Scrape a URL and get content as markdown or other formats",
       "credentials": {
         "firecrawlApi": {
-          "id": "nYuWT3xYRGVhHBDQ",
-          "name": "Firecrawl account"
+          "id": "__FIRECRAWL_CREDENTIAL_ID__",
+          "name": "__FIRECRAWL_CREDENTIAL_NAME__"
         }
       }
     },
@@ -196,8 +196,8 @@
       "webhookId": "a3e6103c-5e73-465d-a301-3f67b3c67205",
       "credentials": {
         "telegramApi": {
-          "id": "dSb9JS2DrQ9q9yM4",
-          "name": "@dapohuikakpustrabotaetbot"
+          "id": "__TELEGRAM_CREDENTIAL_ID__",
+          "name": "__TELEGRAM_CREDENTIAL_NAME__"
         }
       }
     },
@@ -231,8 +231,8 @@
       "webhookId": "880ec2dc-75d8-4261-bb5e-cb9e39f18f83",
       "credentials": {
         "telegramApi": {
-          "id": "dSb9JS2DrQ9q9yM4",
-          "name": "@dapohuikakpustrabotaetbot"
+          "id": "__TELEGRAM_CREDENTIAL_ID__",
+          "name": "__TELEGRAM_CREDENTIAL_NAME__"
         }
       }
     },
@@ -253,8 +253,8 @@
       "webhookId": "39bea18b-3400-4c05-a209-2e07624e0bde",
       "credentials": {
         "telegramApi": {
-          "id": "dSb9JS2DrQ9q9yM4",
-          "name": "@dapohuikakpustrabotaetbot"
+          "id": "__TELEGRAM_CREDENTIAL_ID__",
+          "name": "__TELEGRAM_CREDENTIAL_NAME__"
         }
       }
     },
@@ -361,8 +361,8 @@
       "webhookId": "b1937c45-5acf-4228-a37b-dc9d9ae75a19",
       "credentials": {
         "telegramApi": {
-          "id": "dSb9JS2DrQ9q9yM4",
-          "name": "@dapohuikakpustrabotaetbot"
+          "id": "__TELEGRAM_CREDENTIAL_ID__",
+          "name": "__TELEGRAM_CREDENTIAL_NAME__"
         }
       }
     },
@@ -382,7 +382,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "user_id": 777,
+            "user_id": "={{ null }}",
             "facet_format": "={{ $json.output.facet_format }}",
             "facet_topic": "={{ $json.output.facet_topic }}",
             "facet_function": "={{ $json.output.facet_function }}",
@@ -502,8 +502,8 @@
       "name": "Insert rows in a table",
       "credentials": {
         "postgres": {
-          "id": "WGrG0fYFjpNI5oEC",
-          "name": "Postgres account"
+          "id": "__POSTGRES_CREDENTIAL_ID__",
+          "name": "__POSTGRES_CREDENTIAL_NAME__"
         }
       }
     },
@@ -524,8 +524,8 @@
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "WGrG0fYFjpNI5oEC",
-          "name": "Postgres account"
+          "id": "__POSTGRES_CREDENTIAL_ID__",
+          "name": "__POSTGRES_CREDENTIAL_NAME__"
         }
       }
     },
@@ -572,8 +572,8 @@
       "webhookId": "89ea10bc-337c-4742-88b6-4db637573883",
       "credentials": {
         "telegramApi": {
-          "id": "dSb9JS2DrQ9q9yM4",
-          "name": "@dapohuikakpustrabotaetbot"
+          "id": "__TELEGRAM_CREDENTIAL_ID__",
+          "name": "__TELEGRAM_CREDENTIAL_NAME__"
         }
       }
     },
@@ -617,8 +617,8 @@
       "name": "Select rows from a table in Postgres",
       "credentials": {
         "postgres": {
-          "id": "WGrG0fYFjpNI5oEC",
-          "name": "Postgres account"
+          "id": "__POSTGRES_CREDENTIAL_ID__",
+          "name": "__POSTGRES_CREDENTIAL_NAME__"
         }
       }
     },
@@ -643,8 +643,8 @@
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "DUTZLzREZGc8fX9y",
-          "name": "OpenAi account"
+          "id": "__OPENAI_CREDENTIAL_ID__",
+          "name": "__OPENAI_CREDENTIAL_NAME__"
         }
       }
     },

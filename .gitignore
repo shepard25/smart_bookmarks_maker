@@ -3,3 +3,6 @@ postgres_data
 pgadmin_data
 
 .idea
+.env
+.env.*
+!.env.example
