@@ -13,9 +13,30 @@ The current repository contents look more like a smart bookmarking pipeline than
 - if the link is new, scrapes the page through Firecrawl;
 - extracts factual metadata using a dedicated AI agent;
 - assigns `format`, `topic`, `function`, and `tech_stack` facets using values already present in the database;
+- turns each saved link into a structured card with human-readable fields and reusable facet groups;
 - writes the result into Notion;
 - stores the same facets and core fields in Postgres;
 - sends a reply back to the user in Telegram.
+
+Facet groups used by the pipeline:
+
+- `format`: what the resource is;
+- `topic`: what the resource is about;
+- `function`: what the resource is useful for;
+- `tech_stack`: named technologies clearly present in the resource.
+
+## Example Card
+
+Example of the kind of bookmark card this pipeline produces:
+
+![Example bookmark card](./assets/example-bookmark-card.svg)
+
+Example facet output shown in the card:
+
+- `format`: `repository`
+- `function`: `software development`, `knowledge sharing`
+- `tech_stack`: `GitHub`
+- `topic`: `skills`, `codex`, `catalog`
 
 ## Architecture
 

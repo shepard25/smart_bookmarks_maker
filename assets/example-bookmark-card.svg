@@ -1,0 +1,71 @@
+<svg width="736" height="599" viewBox="0 0 736 599" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="736" y2="599" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E1E1E"/>
+      <stop offset="1" stop-color="#191919"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="736" y2="599" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#232323"/>
+      <stop offset="1" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <rect width="736" height="599" rx="20" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <rect x="18" y="18" width="700" height="563" rx="18" fill="url(#panel)"/>
+  </g>
+
+  <text x="38" y="98" fill="#F3F3F3" font-family="'Segoe UI', Arial, sans-serif" font-size="31" font-weight="700">skills: Skills Catalog for Codex</text>
+
+  <g fill="#B6B6B6" font-family="'Segoe UI', Arial, sans-serif" font-size="18">
+    <text x="40" y="145">No</text>
+    <text x="74" y="145">id</text>
+
+    <text x="40" y="199">URL</text>
+    <text x="40" y="307">Saved</text>
+    <text x="40" y="361">Person</text>
+    <text x="40" y="415">Format</text>
+    <text x="40" y="469">Function</text>
+    <text x="40" y="523">Tech Stack</text>
+    <text x="40" y="577">Topic</text>
+  </g>
+
+  <g fill="#ECECEC" font-family="'Segoe UI', Arial, sans-serif">
+    <text x="272" y="145" font-size="18">1</text>
+    <text x="272" y="199" font-size="18" font-weight="600">github.com/ope...skills</text>
+    <text x="272" y="307" font-size="18" font-weight="600">March 9, 2026 1:14</text>
+    <text x="272" y="361" font-size="18" font-weight="600">openai</text>
+  </g>
+
+  <g>
+    <rect x="272" y="387" width="78" height="28" rx="6" fill="#9E6436"/>
+    <text x="311" y="406" text-anchor="middle" fill="#FFF2E7" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">repository</text>
+  </g>
+
+  <g>
+    <rect x="272" y="441" width="201" height="28" rx="6" fill="#7B5A95"/>
+    <text x="372.5" y="460" text-anchor="middle" fill="#F8ECFF" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">software development</text>
+
+    <rect x="488" y="441" width="176" height="28" rx="6" fill="#A76682"/>
+    <text x="576" y="460" text-anchor="middle" fill="#FFF0F6" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">knowledge sharing</text>
+  </g>
+
+  <g>
+    <rect x="272" y="495" width="77" height="28" rx="6" fill="#8B6A54"/>
+    <text x="310.5" y="514" text-anchor="middle" fill="#FFF1E8" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">GitHub</text>
+  </g>
+
+  <g>
+    <rect x="272" y="549" width="57" height="28" rx="6" fill="#315F95"/>
+    <text x="300.5" y="568" text-anchor="middle" fill="#EEF6FF" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">skills</text>
+
+    <rect x="341" y="549" width="72" height="28" rx="6" fill="#7760A1"/>
+    <text x="377" y="568" text-anchor="middle" fill="#F3EEFF" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">codex</text>
+
+    <rect x="424" y="549" width="71" height="28" rx="6" fill="#B16159"/>
+    <text x="459.5" y="568" text-anchor="middle" fill="#FFF1EE" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">catalog</text>
+  </g>
+</svg>
