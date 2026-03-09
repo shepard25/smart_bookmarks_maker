@@ -140,8 +140,8 @@
   },
   "versionId": "a7afcf7b-6f92-46ad-8be5-a9ef7e4acbc6",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"
+    "templateCredsSetupCompleted": false,
+    "instanceId": "__N8N_INSTANCE_ID__"
   },
   "id": "VBdkWJwmLz12cKdy",
   "tags": []
