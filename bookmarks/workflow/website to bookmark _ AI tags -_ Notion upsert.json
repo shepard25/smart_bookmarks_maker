@@ -6,10 +6,10 @@
         "resource": "databasePage",
         "databaseId": {
           "__rl": true,
-          "value": "__NOTION_DATABASE_ID__",
+          "value": "8e53e047-0bba-4a15-8cc1-e1c8d1583905",
           "mode": "list",
-          "cachedResultName": "__NOTION_DATABASE_NAME__",
-          "cachedResultUrl": "https://www.notion.so/__NOTION_DATABASE_ID__"
+          "cachedResultName": "Bookmark",
+          "cachedResultUrl": "https://www.notion.so/8e53e0470bba4a158cc1e1c8d1583905"
         },
         "title": "={{ $json.output.Title }}",
         "propertiesUi": {
@@ -64,13 +64,13 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2,
       "position": [
-        1600,
-        128
+        1792,
+        80
       ],
       "credentials": {
         "notionApi": {
-          "id": "__NOTION_CREDENTIAL_ID__",
-          "name": "__NOTION_CREDENTIAL_NAME__"
+          "id": "bDm8PT41kde5yZFK",
+          "name": "bookmarks"
         }
       }
     },
@@ -88,15 +88,15 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        752,
-        -48
+        944,
+        -96
       ],
       "id": "623b9f27-ae74-43b2-bca6-ea53509cd15b",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "__OPENAI_CREDENTIAL_ID__",
-          "name": "__OPENAI_CREDENTIAL_NAME__"
+          "id": "DUTZLzREZGc8fX9y",
+          "name": "OpenAi account"
         }
       }
     },
@@ -109,15 +109,15 @@
       "type": "@mendable/n8n-nodes-firecrawl.firecrawl",
       "typeVersion": 1,
       "position": [
-        240,
-        128
+        432,
+        80
       ],
       "id": "7f138e8e-a9cc-4e45-ba64-e96276865638",
       "name": "Scrape a URL and get content as markdown or other formats",
       "credentials": {
         "firecrawlApi": {
-          "id": "__FIRECRAWL_CREDENTIAL_ID__",
-          "name": "__FIRECRAWL_CREDENTIAL_NAME__"
+          "id": "nYuWT3xYRGVhHBDQ",
+          "name": "Firecrawl account"
         }
       }
     },
@@ -129,8 +129,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        880,
-        -48
+        1072,
+        -96
       ],
       "id": "dd51a87e-f49b-4d76-ba45-49fc6c2452b1",
       "name": "Structured Output Parser"
@@ -146,7 +146,9 @@
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
-          "value": {},
+          "value": {
+            "url": "={{ $json.url }}"
+          },
           "matchingColumns": [
             "url"
           ],
@@ -172,8 +174,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        -432,
-        -160
+        -240,
+        -208
       ],
       "id": "7ba2af4e-caf3-4767-858a-61dcc08fd47b",
       "name": "Call 'Check link in DB'"
@@ -188,28 +190,28 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1104,
-        -160
+        -1360,
+        -304
       ],
       "id": "b065d512-9e4b-4ec1-951c-5099f5ba2a00",
       "name": "Telegram Trigger",
       "webhookId": "a3e6103c-5e73-465d-a301-3f67b3c67205",
       "credentials": {
         "telegramApi": {
-          "id": "__TELEGRAM_CREDENTIAL_ID__",
-          "name": "__TELEGRAM_CREDENTIAL_NAME__"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
     {
       "parameters": {
-        "jsCode": "const text = $input.first().json.message.text || '';\n\nconst urlMatch = text.match(/https?:\\/\\/\\S+/);\nconst url = urlMatch ? urlMatch[0] : null;\n\nlet cleanText = text;\nif (url) {\n  cleanText = text.replace(url, '').replace(/\\s+/g, ' ').trim();\n}\n\nreturn [\n  {\n    json: {\n      url: url,\n      text: cleanText\n    }\n  }\n];"
+        "jsCode": "const text = $('Telegram Trigger').first().json.message.text\n\nconst urlMatch = text.match(/https?:\\/\\/\\S+/);\nconst url = urlMatch ? urlMatch[0] : null;\n\nlet cleanText = text;\nif (url) {\n  cleanText = text.replace(url, '').replace(/\\s+/g, ' ').trim();\n}\n\nreturn [\n  {\n    json: {\n      url: url,\n      text: cleanText\n    }\n  }\n];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -880,
-        -64
+        -688,
+        -112
       ],
       "id": "16b223a2-2b6a-434f-b9df-799e08619d9a",
       "name": "Extract URL from TG message"
@@ -223,16 +225,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        16,
-        -256
+        208,
+        -304
       ],
       "id": "ed100138-87c1-4c35-967b-70d7c6671197",
       "name": "TG: send exists message ",
       "webhookId": "880ec2dc-75d8-4261-bb5e-cb9e39f18f83",
       "credentials": {
         "telegramApi": {
-          "id": "__TELEGRAM_CREDENTIAL_ID__",
-          "name": "__TELEGRAM_CREDENTIAL_NAME__"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -245,16 +247,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1824,
-        128
+        2016,
+        80
       ],
       "id": "07cfa6d0-e74f-4bed-a8d0-47dd4bb68367",
       "name": "Send a text message",
       "webhookId": "39bea18b-3400-4c05-a209-2e07624e0bde",
       "credentials": {
         "telegramApi": {
-          "id": "__TELEGRAM_CREDENTIAL_ID__",
-          "name": "__TELEGRAM_CREDENTIAL_NAME__"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -268,8 +270,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        744,
-        -272
+        944,
+        -320
       ],
       "id": "4f02f609-61e2-4d70-8a70-823c5f0c1920",
       "name": "Agent: info extractor"
@@ -303,8 +305,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -208,
-        -160
+        -16,
+        -208
       ],
       "id": "6aaa5dc3-158d-4857-823f-91ebce231813",
       "name": "Do yoy have link in your DB?"
@@ -338,8 +340,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -656,
-        -64
+        -464,
+        -112
       ],
       "id": "c39a9a0d-bca4-418b-b3f7-0637b7d3627b",
       "name": "Do you have a link in mesasge?"
@@ -353,16 +355,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -432,
-        32
+        -240,
+        -16
       ],
       "id": "b1787c9d-030f-4a13-9aa0-83445b25c92e",
       "name": "TG: send no url message",
       "webhookId": "b1937c45-5acf-4228-a37b-dc9d9ae75a19",
       "credentials": {
         "telegramApi": {
-          "id": "__TELEGRAM_CREDENTIAL_ID__",
-          "name": "__TELEGRAM_CREDENTIAL_NAME__"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -382,7 +384,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "user_id": "={{ null }}",
+            "user_id": 777,
             "facet_format": "={{ $json.output.facet_format }}",
             "facet_topic": "={{ $json.output.facet_topic }}",
             "facet_function": "={{ $json.output.facet_function }}",
@@ -495,15 +497,15 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        1600,
-        -64
+        1792,
+        -112
       ],
       "id": "b6c4face-d867-412c-b49d-03d3a6a93cde",
       "name": "Insert rows in a table",
       "credentials": {
         "postgres": {
-          "id": "__POSTGRES_CREDENTIAL_ID__",
-          "name": "__POSTGRES_CREDENTIAL_NAME__"
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
         }
       }
     },
@@ -516,16 +518,16 @@
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        240,
-        -64
+        432,
+        -112
       ],
       "id": "c6d127da-3d21-4a1a-81c3-094e1293ed95",
       "name": "Select distince facets",
       "alwaysOutputData": true,
       "credentials": {
         "postgres": {
-          "id": "__POSTGRES_CREDENTIAL_ID__",
-          "name": "__POSTGRES_CREDENTIAL_NAME__"
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
         }
       }
     },
@@ -534,8 +536,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        16,
-        -64
+        208,
+        -112
       ],
       "id": "4b49cd3b-7780-44c1-be0e-7b283dd6e5f1",
       "name": "URL was not processed yet"
@@ -549,8 +551,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        464,
-        32
+        656,
+        -16
       ],
       "id": "b36a922a-1fb5-41d9-8ad2-bd79f89971f6",
       "name": "Merge"
@@ -564,16 +566,16 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        240,
-        -256
+        432,
+        -304
       ],
       "id": "764f2d09-4c3c-456e-a3ed-a201ebe9f0b8",
       "name": "TG: send process message",
       "webhookId": "89ea10bc-337c-4742-88b6-4db637573883",
       "credentials": {
         "telegramApi": {
-          "id": "__TELEGRAM_CREDENTIAL_ID__",
-          "name": "__TELEGRAM_CREDENTIAL_NAME__"
+          "id": "dSb9JS2DrQ9q9yM4",
+          "name": "@dapohuikakpustrabotaetbot"
         }
       }
     },
@@ -582,8 +584,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1104,
-        32
+        -912,
+        -64
       ],
       "id": "e07bec96-7ef5-4a3a-bf87-46e826e28639",
       "name": "When clicking ‘Execute workflow’"
@@ -610,15 +612,15 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        816,
-        456
+        1008,
+        416
       ],
       "id": "df099778-718a-406f-a9df-36bb87cbaac2",
       "name": "Select rows from a table in Postgres",
       "credentials": {
         "postgres": {
-          "id": "__POSTGRES_CREDENTIAL_ID__",
-          "name": "__POSTGRES_CREDENTIAL_NAME__"
+          "id": "WGrG0fYFjpNI5oEC",
+          "name": "Postgres account"
         }
       }
     },
@@ -636,15 +638,15 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        688,
-        456
+        880,
+        416
       ],
       "id": "cf89078a-8f41-45eb-8d15-19705df73229",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "__OPENAI_CREDENTIAL_ID__",
-          "name": "__OPENAI_CREDENTIAL_NAME__"
+          "id": "DUTZLzREZGc8fX9y",
+          "name": "OpenAi account"
         }
       }
     },
@@ -655,8 +657,8 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        944,
-        456
+        1136,
+        416
       ],
       "id": "bf678d59-42dc-4a62-b0fe-a154acf91c9e",
       "name": "Structured Output Parser1"
@@ -666,8 +668,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1152,
-        32
+        1344,
+        -16
       ],
       "id": "5cfb58d2-9e9d-4611-b4d9-458c438d9d4d",
       "name": "Final bookmark"
@@ -679,8 +681,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1376,
-        32
+        1568,
+        -16
       ],
       "id": "8432a589-c42a-4ed1-89fa-3700cf2e5c2c",
       "name": "Code in JavaScript"
@@ -710,11 +712,57 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        744,
-        232
+        944,
+        192
       ],
       "id": "17ef72e3-fa3f-4905-83bf-01d01b300e4e",
       "name": "Agent: Facet extractor"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2d6ebb19-88d0-4c72-94ff-3f53c989bfa5",
+              "leftValue": "={{ $json.allowed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -912,
+        -304
+      ],
+      "id": "051f666e-4582-4d8c-a075-55f30a0ce1d1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "const chatId = $env.MY_TELEGRAM_ID\nif ( $input.first().json.message.from.id != chatId) {\n  return [{\"allowed\": false}]\n}\nreturn [{\"allowed\":true}]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1136,
+        -304
+      ],
+      "id": "e4b38a47-439d-45c3-be66-7c20cdd8903b",
+      "name": "user ID in whitelist"
     }
   ],
   "pinData": {
@@ -804,7 +852,7 @@
       "main": [
         [
           {
-            "node": "Extract URL from TG message",
+            "node": "user ID in whitelist",
             "type": "main",
             "index": 0
           }
@@ -1003,15 +1051,38 @@
           }
         ]
       ]
+    },
+    "user ID in whitelist": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Extract URL from TG message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "9cc47a13-37fa-45f0-82ab-850872c94873",
+  "versionId": "beea8a26-e348-4927-af8b-5112cf71a74f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "ad5e3c0acd703e58f5da60365194baa7b09a78089606e118e0e06674650d5b8d"

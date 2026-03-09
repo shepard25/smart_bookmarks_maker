@@ -53,6 +53,9 @@ services:
       # ключ шифрования
       N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
       WEBHOOK_URL: ${WEBHOOK_URL}
+      # TG protection
+      MY_TELEGRAM_ID: ${TG_USERID}
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: false
     networks:
       - n8n_network
     volumes:
